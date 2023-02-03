@@ -1,0 +1,51 @@
+# 字典
+#name: "test_yaml"
+#result: "success"
+
+
+# 列表实现:使用 - "value"
+#  - "a"
+#  - "b"
+#  - "c"
+#  - "d"
+#  - "e"
+
+
+# 混合场景:
+#字典嵌套字典{person1:{"name":"ming","age":"18"}
+#           person2:{"name":"hong","age":"20"} }
+#person1:
+#  name: ming
+#  age: 18
+
+# 字典嵌套列表:{person:["a","b","c"]}
+#person:
+#  - "a"
+#  - "b"
+#  - "c"
+
+# 列表嵌套列表:[['a', 'b', 'c'], ['a', 'b', 'c']]
+#  -
+#    - "a"
+#    - "b"
+#    - "c"
+#  -
+#    - "a"
+#    - "b"
+#    - "c"
+
+#列表嵌套字典: [{'username1': 'test1'}, {'password1': 111}, {'username2': 'test2'}]
+#-
+#    username: test1
+#    password1: 111
+#-
+#    username2: "中文"
+
+
+# 读取多个文档内容
+---
+"用户": "zhang"
+"密码": "12313"
+---
+"书籍": "献给阿尔吉侬的花束"
+"价格": "19元"

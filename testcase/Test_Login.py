@@ -6,24 +6,19 @@ import os
 def login():
     url = "https://app100.qiyuesuo.net/login"
 
-    data = {"username": "10000000001",
+    json = {"username": "10000000001",
             "password": "qiyuesuo#2020"}
 
+    headers={
 
-    r = requests.post(url=url, data=data)
+    }
+    r = requests.post(url=url, json=json,headers=headers)
     r.encoding="utf-8"
-    response=r.text
-    with open("./a.html","w", encoding="utf-8") as f:
-        f.write(response)
-
-# def login():
-#     url = "https://www.baidu.com"
-#     response = requests.post(url=url)
-#     response.encoding = "utf-8"
-#     ok = response.text
-#
-#     with open("./baidu.html", "w", encoding="utf-8") as f:
-#         f.write(ok)
+    print(r.cookies)
+    print(r.encoding)
+    # with open("./a.html","w", encoding="utf-8") as f:
+    #     f.write(response)
+    print(r.status_code)
 
 
 if __name__ == '__main__':
