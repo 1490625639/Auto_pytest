@@ -16,3 +16,6 @@
 
 [Git忽略文件.gitignore详解](https://blog.csdn.net/ThinkWon/article/details/101447866)
 
+[python获取时间作为保存的文件名并拼接成完整文件路径](https://blog.csdn.net/teacoffeetea/article/details/115303574)
+[logging日志的四个等级和使用](https://blog.csdn.net/lh_hebine/article/details/99200152)
+[最棒总结！Python日志库 logging 使用指南来了](https://zhuanlan.zhihu.com/p/445411809)
