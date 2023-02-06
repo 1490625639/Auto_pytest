@@ -6,7 +6,7 @@
 import requests
 
 
-"""# get方法的一个封装,将参数以及响应返回的json跟text做了判断
+# get方法的一个封装,将参数以及响应返回的json跟text做了判断
 # 1创建一个封装的方法
 def requests_get(url, headers):
     # 2 发送requests get请求
@@ -45,7 +45,7 @@ def requests_post(url, json=None, headers=None):
 
 # 5 字典返回
     return  res
-"""
+#---------------------以上为一种方法.但是比较复杂,需要重构
 
 #重构
 # 1 创建类

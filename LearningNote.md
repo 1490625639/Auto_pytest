@@ -14,5 +14,5 @@
 
 [python中的TypeError: （类） takes no arguments错误](https://blog.csdn.net/yykkkybs/article/details/106998865)
 
-
+[Git忽略文件.gitignore详解](https://blog.csdn.net/ThinkWon/article/details/101447866)
 

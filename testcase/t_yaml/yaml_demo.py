@@ -29,5 +29,5 @@ from utils.YamlUtil import YamlReader
 #         print(i)
 
 # res = YamlReader("data.yml").data()
-res = YamlReader("data.yml").data_all()
+res = YamlReader("./data.yml").data_all()
 print(res)

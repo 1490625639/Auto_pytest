@@ -5,7 +5,7 @@
 """
 import os
 import json
-
+from config.Conf import ConfigYaml
 """
 登录	登录成功	http://211.103.136.242:8064/authorizations/	
 	POST	json	{"username":"python","password":"12345678"}
@@ -18,16 +18,20 @@ from  utils.RequesetsUtil import requests_post
 from utils.RequesetsUtil import Request
 # 2、定义登录方法
 def login():
+    conf_y=ConfigYaml()
+    url_path=conf_y.get_conf_url()
+    url=url_path+"/login"
+
     # 3 定义测试数据
-    url = ""
-    data = {}
+    #url = ""
+    data = {"username":"张三"}
     # 4发送
     # r = requests.post(url=url,data=data)
-    r=requests_post(url,json=data)
+#    r=requests_post(url,json=data)
     # # 5 输出结果
     # print(r.json())
     request = Request()
-    r = request.post(url, json)
+    r = request.post(url, json=data)
     print(r)
 
 
@@ -100,6 +104,6 @@ def order():
 
 if __name__ == '__main__':
     login()
-    info()
-    cart()
-    order()
+    # info()
+    # cart()
+    # order()
