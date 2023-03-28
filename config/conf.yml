@@ -1,3 +1,7 @@
 BASE:
-  test:
-    url: "https://app78.qiyuesuo.net"
+  # log等级
+  log_level: "debug"
+  # 扩展名
+  log_extension: ".log"
+#test:
+#  url: "https://app78.qiyuesuo.net/"

@@ -19,7 +19,7 @@ log_l={
 
 class Logger:
     def __init__(self, log_file, log_name, log_level):
-        self.log_file = log_file
+        self.log_file = log_file#扩展名
         self.log_name = log_name
         self.log_level = log_level
 
