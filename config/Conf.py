@@ -46,6 +46,7 @@ class ConfigYaml:
     def get_conf_extension(self):
         #获取扩展名
         return self.config["BASE"]["log_extension"]
+    #如果我再这里乱写一些东西会怎么提交呢?
 if __name__ == '__main__':
     conf_read=ConfigYaml()
     print(conf_read.get_conf_url())
