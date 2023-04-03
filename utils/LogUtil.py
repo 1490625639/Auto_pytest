@@ -39,10 +39,12 @@ class Logger:
             fh_stream = logging.StreamHandler()
             formatter = logging.Formatter("%(asctime)s %(levelno)s  %(levelname)s %(message)s")
             fh_stream.setFormatter(formatter)
+
             # 创建文件处理器
 
             data_time = time.strftime('%Y-%m-%d-%H-%M-%S')
-            fh_file = logging.FileHandler(self.log_file + data_time + ".log")
+            #fh_file = logging.FileHandler(self.log_file)
+            fh_file = logging.FileHandler(self.log_file, encoding='utf-8')
             fh_file.setLevel(log_l[self.log_level])
             fh_stream.setFormatter(formatter)
 
@@ -73,8 +75,4 @@ def my_log(log_name=__file__):
     return Logger(log_file=logfile,log_name=log_name,log_level=log_level).logger
 
 if __name__ == '__main__':
-    my_log("zheh")
-    logger = my_log()
-    logger.info("这是一条信息日志")
-    logger.warning("这是一条警告日志")
-    logger.error("这是一条错误日志")
+    my_log().debug("debug测试")
