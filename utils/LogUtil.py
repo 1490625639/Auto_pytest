@@ -72,7 +72,7 @@ log_level=ConfigYaml().get_conf_log()
 
 # 2 对外方法,初始log工具类,提供其他类使用
 def my_log(log_name=__file__):
-    return Logger(log_file=logfile,log_name=log_name,log_level=log_level).logger
+    return Logger(log_file=logfile,log_name=str(log_name),log_level=log_level).logger
 
 if __name__ == '__main__':
     my_log().debug("debug测试")

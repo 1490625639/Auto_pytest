@@ -3,5 +3,5 @@ BASE:
   log_level: "debug"
   # 扩展名
   log_extension: ".log"
-#test:
-#  url: "https://app78.qiyuesuo.net/"
+  test:
+    url: "https://app78.qiyuesuo.net/"

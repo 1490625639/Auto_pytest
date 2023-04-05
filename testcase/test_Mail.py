@@ -5,7 +5,11 @@
 """
 import os
 import json
+
+import pytest
+
 from config.Conf import ConfigYaml
+
 """
 登录	登录成功	http://211.103.136.242:8064/authorizations/	
 	POST	json	{"username":"python","password":"12345678"}
@@ -16,8 +20,9 @@ import requests
 from  utils.RequesetsUtil import requests_get
 from  utils.RequesetsUtil import requests_post
 from utils.RequesetsUtil import Request
+from utils.AssertUtil import AssertUtil
 # 2、定义登录方法
-def login():
+def testlogin():
     conf_y=ConfigYaml()
     url_path=conf_y.get_conf_url()
     url=url_path+"/login"
@@ -32,9 +37,24 @@ def login():
     # print(r.json())
     request = Request()
     r = request.post(url, json=data)
-    print(r)
-
-
+    # 返回状态码
+    code=r["code"]
+    # 返回结果内容
+    #body=json.dumps(r["body"])
+    body=r["body"]
+    #验证
+    # AssertUtil().assert_code(code,200)
+    # AssertUtil().assert_in_body(body,403)
+    # #print(r)
+# chatgpt修改后的代码
+    try:
+        AssertUtil().assert_code(code, 200)
+    except AssertionError as e:
+        print(e)
+    try:
+        AssertUtil().assert_in_body(body, 403)
+    except AssertionError as e:
+        print(e)
 """
 个人信息	获取个人信息正确	http://211.103.136.242:8064/user/	登录	get	
     headers: {'Authorization': 'JWT ' + this.token
@@ -43,7 +63,7 @@ def login():
 
 
 # 需要使用到登录后的token
-def info():
+def testinfo():
     url = ""
     token = ""
     headers = {}
@@ -103,7 +123,12 @@ def order():
 
 
 if __name__ == '__main__':
-    login()
+    #login()
     # info()
     # cart()
     # order()
+
+# 1 根据默认的运行原则,调整py文件命名跟函数命名.
+# 2 pytes.main()运行
+# 3
+    pytest.main(["-s"])
