@@ -8,6 +8,7 @@ import json
 
 import pytest
 
+from common.Base import init_db
 from config.Conf import ConfigYaml
 
 """
@@ -55,6 +56,14 @@ def testlogin():
         AssertUtil().assert_in_body(body, 403)
     except AssertionError as e:
         print(e)
+    # 初始化数据库对象
+    conn=init_db(db_alias="db_1")
+    # 查询结果
+    res_db=conn.fetchone("select * from a")
+    print(res_db)
+    # 验证结果
+    user_id=body["user_id"]
+    assert user_id==res_db["id"]
 """
 个人信息	获取个人信息正确	http://211.103.136.242:8064/user/	登录	get	
     headers: {'Authorization': 'JWT ' + this.token
@@ -84,27 +93,20 @@ get	json={
 }"
 """
 
-
 def goods_list():
     url = ""
     data = {}
-
     r = requests.get(url, json=data)
     print(r.json())
-
 
 """
 购物车	添加购物车成功	http://211.103.136.242:8064/cart/	
 登录	post	json	
 {"sku_id": "3","count": "1", "selected": "true"}"""
-
-
 def cart():
     url = ""
     data = {}
     headers = {}
-    # r = requests.post(url, json=data, headers=headers)
-    # print(r.json())
     r=requests_post(url=url,json=data,headers=headers)
     print(r)
 
