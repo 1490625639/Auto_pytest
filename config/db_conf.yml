@@ -1,0 +1,16 @@
+# -*- coding: utf-8 -*-
+# 编写相关信息
+db_1:
+  db_host: "localhost"
+  db_user: "root"
+  db_password: "123456"
+  db_name: "prac"
+  db_charset: "utf-8"
+  db_port: "3306"
+db_2:
+  db_host: "localhost"
+  db_user: "root"
+  db_password: "123456"
+  db_name: "prac"
+  db_charset: "utf8"
+  db_port: "3306"

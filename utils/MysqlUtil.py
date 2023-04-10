@@ -2,6 +2,8 @@
 
 # 1 创建封装类
 import pymysql
+import pymysql.cursors
+
 from utils.LogUtil import my_log
 class Mysql:
     # 2 初始化数据,链接数据库,光标对象
@@ -16,7 +18,7 @@ class Mysql:
             port=port
         )
         # 2 初始化数据,链接数据库,光标对象
-        self.cursor = self.conn.cursor()
+        self.cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
 
     # 3 创建询\执行方法
     def fetchone(self, sql):
@@ -54,7 +56,8 @@ class Mysql:
 
 if __name__ == '__main__':
     mysql = Mysql("localhost", "root", "123456", "prac", "utf8", 3306)
-    res = mysql.fetchone("select * from a")
+    #res = mysql.fetchall("select * from a")
+    res=mysql.exec()
     print(res)
 """  练习使用
 # 1导入pymysql
