@@ -1,0 +1,20 @@
+# 登录测试用例
+
+# 登录测试用例名称
+# url地址
+# data
+# 期望结果
+---
+  case_name: "登录成功"
+  url: "/discover" #拼接必应图片
+  data:
+    username: 'python'
+    password: '12345'
+  expected: '"user_id": 1,"username": "python"'
+---
+  case_name: "登录失败用例"
+  url: "baidu.com"
+  data:
+    username: 'python'
+    password: '12345'
+  expected: '"user_id": 0,"username": "python"'
