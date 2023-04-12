@@ -44,3 +44,4 @@ if __name__ == '__main__':
     pytest.main(["-s", "--nohtml", "test_login.py"])
 # 4.13 00点34分不在家，不写代码
 # 每次提交都要登录github么？
+# 本地测试是否需要登录GitHub
