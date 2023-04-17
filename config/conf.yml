@@ -5,3 +5,5 @@ BASE:
   log_extension: ".log"
   test:
     url: "https://www.douyin.com"
+    case_file: "testdata.xlsx"
+    case_sheet: "美多商场接口测试"

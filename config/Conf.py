@@ -49,6 +49,7 @@ def get_log_path():
 
 def get_db_config_file():
     return _db_config_file
+# 定义获取excel路径方法
 
 
 # 读取配置文件
@@ -71,13 +72,21 @@ class ConfigYaml:
         # 获取扩展名
         return self.config["BASE"]["log_extension"]
 
+
+    def get_excel_file(self,):
+        # 获取excel路径
+        return self.config["BASE"]["test"]["case_file"]
+    def get_excel_sheet(self):
+        # 获取测试用例sheet名称
+        return self.config["BASE"]["test"]["case_sheet"]
     def get_db_conf_info(self, db_alias):
         """根据参数alias获取该名称下的数据库信息"""
         return self.db_config[db_alias]
-
 
 if __name__ == '__main__':
     conf_read = ConfigYaml()
     # print(conf_read.get_conf_url())
     # print(conf_read.get_conf_log(), conf_read.get_conf_extension())
-    print(conf_read.get_db_conf_info("db_2"))
+    #print(conf_read.get_db_conf_info("db_2"))
+    print(conf_read.get_excel_file())
+    print(conf_read.get_excel_sheet())
