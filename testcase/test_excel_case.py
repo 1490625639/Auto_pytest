@@ -43,6 +43,7 @@ class TestExcel:
         params_type = case[data_key.params_type]
         expect_result = case[data_key.expect_result]
         headers = case[data_key.headers]
+        cookies = case[data_key.cookies]
         code = case[data_key.code]
         db_verify = case[data_key.db_verify]
         # print(case_model,case_name,pre_exec,method,params,params_type,expect_result,headers,cookies,code,db_verify)
@@ -54,14 +55,17 @@ class TestExcel:
             headers=json.loads(headers)
         else:
             headers=headers
-
+        if cookies:  # 1 判断cookies是否存在，json转义 2. 请求方法中增加headers,cookies 3 发送请求
+            cookie = json.loads(cookies)
+        else:
+            cookie = cookies
         # 1验证前置条件
         if pre_exec:
-
+            pass
         # 2找到执行用例
             # 前置测试用例
             pre_case = data_init.get_case_pre(pre_exec)
-            print("前置信息%s",pre_case)
+            print("前置信息"+pre_case)
         # 验证params有没有内容
         if len(str(params).strip()) is not 0:
             # params转义成json
@@ -69,9 +73,9 @@ class TestExcel:
 
         # get/post
         if str(method).lower() == "get":
-            res = request.get(url, json=params,headers=headers)
+            res = request.get(url, json=params,headers=headers,cookies=cookie)
         elif str(method).lower() == "post":
-            res = request.post(url, json=params,headers=headers)
+            res = request.post(url, json=params,headers=headers,cookies=cookie)
         else:
             log.error("这是一个错误请求:%s" % method)
 
