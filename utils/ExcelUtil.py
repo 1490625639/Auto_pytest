@@ -25,7 +25,7 @@ class ExcelReader:
             raise FileNotFoundError("文件不存在")
 
         # 2 读取方式
-    def data(self):
+    def  data(self):
         # 如果存在self_data不读取
         if not self._data:
             workbook = xlrd.open_workbook(self.excel_file)

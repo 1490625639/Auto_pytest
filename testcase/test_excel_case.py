@@ -16,7 +16,9 @@ case_file = os.path.join("../data", ConfigYaml().get_excel_file())
 # ② 获取用例sheet名称
 sheet_name = ConfigYaml().get_excel_sheet()
 # ③ 获取运行测试用例列表
-run_list = Data(case_file, sheet_name).get_run_data()
+data_init= Data(case_file, sheet_name)
+run_list = data_init.get_run_data()
+
 # ④ 日志
 log = my_log()
 
@@ -41,25 +43,39 @@ class TestExcel:
         params_type = case[data_key.params_type]
         expect_result = case[data_key.expect_result]
         headers = case[data_key.headers]
-        cookies = case[data_key.cookies]
         code = case[data_key.code]
         db_verify = case[data_key.db_verify]
         # print(case_model,case_name,pre_exec,method,params,params_type,expect_result,headers,cookies,code,db_verify)
 
         # ② 发送请求
         request = Request()
+
+        if headers:#1 判断headers是否存在，json转义
+            headers=json.loads(headers)
+        else:
+            headers=headers
+
+        # 1验证前置条件
+        if pre_exec:
+
+        # 2找到执行用例
+            # 前置测试用例
+            pre_case = data_init.get_case_pre(pre_exec)
+            print("前置信息%s",pre_case)
         # 验证params有没有内容
         if len(str(params).strip()) is not 0:
             # params转义成json
             params = json.loads(params)
+
         # get/post
         if str(method).lower() == "get":
-            res = request.get(url, json=params)
+            res = request.get(url, json=params,headers=headers)
         elif str(method).lower() == "post":
-            res = request.post(url, json=params)
+            res = request.post(url, json=params,headers=headers)
         else:
             log.error("这是一个错误请求:%s" % method)
-        print(res)
+
+        #print(res)
 
 
 # 2 测试用例方法,参数化运行

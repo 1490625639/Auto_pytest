@@ -19,3 +19,18 @@ class Data:
                 run_list.append(line)
         return run_list
         print(run_list)
+    def get_case_list(self):
+        """获取全部测试用例"""
+  # 2 读取列是否运行 y
+        run_list=list()
+        # for line in self.reader.data():
+        #         run_list.append(line)
+        #使用列表推导式
+        run_list=[line for line in self.reader.data()]
+        return run_list
+    def get_case_pre(self,pre):# 根据前置条件,从全部测试用例中取对应的测试用例
+        run_list=self.get_case_list()
+        for line in run_list:
+            if pre in   dict(line).values():
+                return pre
+            return None
