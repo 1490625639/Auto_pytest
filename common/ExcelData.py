@@ -14,23 +14,30 @@ class Data:
         run_list = list()  # 类似ExcelUtil文件，定义一个空列表 []=list()
         for line in self.reader.data():
             if str(line[DataConfig().is_run]) == "y":  # 这里判断是否运行列名不符合 规范,excel列的映射,ExcelConfig
-                print(line)
+                print("当前运行用例为",line["用例ID"])
                 # 3 运行后的放入新的列表
                 run_list.append(line)
         return run_list
-        print(run_list)
+
+
     def get_case_list(self):
         """获取全部测试用例"""
-  # 2 读取列是否运行 y
-        run_list=list()
+        # 2 读取列是否运行 y
+        run_list = list()
         # for line in self.reader.data():
         #         run_list.append(line)
-        #使用列表推导式
-        run_list=[line for line in self.reader.data()]
+        # 使用列表推导式
+        run_list = [line for line in self.reader.data()]
         return run_list
-    def get_case_pre(self,pre):# 根据前置条件,从全部测试用例中取对应的测试用例
-        run_list=self.get_case_list()
+
+    def get_case_pre(self, pre):  # 根据前置条件,从全部测试用例中取对应的测试用例
+        run_list = self.get_case_list()
+        # print(run_list)
         for line in run_list:
-            if pre in   dict(line).values():
-                return pre
-            return None
+            #print("line:",line)
+
+            # print(pre) #  = login_4
+            # if pre in dict(line).values():
+            if pre in line["用例ID"]:
+                return line
+            # return None
