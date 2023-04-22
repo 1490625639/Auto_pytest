@@ -55,7 +55,7 @@ class TestExcel:
         # cookie=Base.json_parse(cookies)
         res = self.run_api(url, method, params, headers)
         print("运行前置用例的结果为:", res)
-
+        return res
     # ① 初始化信息
     # 1增加pytest方法
     @pytest.mark.parametrize("case", run_list)
@@ -81,31 +81,73 @@ class TestExcel:
         db_verify = case[data_key.db_verify]
         # print(case_model,case_name,pre_exec,method,params,params_type,expect_result,headers,cookies,code,db_verify)
 
-        if headers:  # 1 判断headers是否存在，json转义
-            headers = json.loads(headers)
-        else:
-            headers = headers
-        # if cookies:  # 1 判断cookies是否存在，json转义 2. 请求方法中增加headers,cookies 3 发送请求
-        #     cookie = json.loads(cookies)
-        # else:
-        #     cookie = cookies
+
         # 1验证前置条件
         if pre_exec:
             pass
             # 2找到执行用例
             # 前置测试用例
             pre_case = data_init.get_case_pre(pre_exec)
-        print("前置信息", pre_case)
+            print("前置条件信息", pre_case)
+            pre_res= self.run_pre(pre_case)
+            #headers,cookies= self.get_correlation(headers,cookies,pre_res)
+            headers = self.get_correlation(headers,pre_res)
+        header = Base.json_parse(headers)
+        res = self.run_api(url, method, params, headers)
+        print("测试用例执行:", res)
+        # cookie=Base.json_parse(cookies)
+        # if headers:  # 1 判断headers是否存在，json转义
+        #     headers = json.loads(headers)
+        # else:
+        #     headers = headers
+        # if cookies:  # 1 判断cookies是否存在，json转义 2. 请求方法中增加headers,cookies 3 发送请求
+        #     cookie = json.loads(cookies)
+        # else:
+        #     cookie = cookies
 
-        self.run_pre(pre_case)
+#    def get_correlation(self,headers,cookies,pre_res):
+#为了保障程序运行去除cookies+pre_res
+    def get_correlation(self, headers, pre_res):
+        """前置条件结果
+        关联
+        :param headers:
+        :param cookies:
+        :param pre_res:
+        :return:
+        """
+        # 验证是否有关联
+        #headers_para,cookies_para=Base.params_find(headers,cookies)
+        # 为了保障程序运行去除cookies
+        headers_para= Base.params_find(headers)
+        # 有关联,执行前置用例,
+        if len(headers_para):
+            #  headers_data=pre_res["body"][headers_para[0]]
+            """因为根据环境原因(接口不通),运行到此处实际返回的body为空,导致:TypeError: string indices must be integers
+            所以加一个判断------由chatgpt提供"""
+            if pre_res["body"]:
+                headers_data = pre_res["body"][headers_para[0]]
+            else:
+                print("这里错误了")
+                headers_data = None  # 或者任何其他你希望的默认值
 
-
+        # 结果替换
+        headers=Base.res_sub(headers,headers_data)
+        # if len(cookies_para):
+        #     cookies_data=pre_res["body"][cookies_para[0]]
+        # # 结果替换
+        # cookies=Base.res_sub(cookies,cookies_data)
+        """为了保障程序运行去除cookies"""
+#        return  headers,cookies
+        return  headers
 # 2 测试用例方法,参数化运行
 
 if __name__ == '__main__':
     # TestExcel.test_run()
     # 4 运行
-    #  pytest.main(["-s", "test_excel_case.py"])
+    pytest.main(["-s", "test_excel_case.py"])
+
+
+
 
 
 
@@ -126,7 +168,7 @@ if __name__ == '__main__':
     #         它的参数包括三个：
     #         pattern：用于匹配字符串的正则表达式。可以是一个字符串或者一个正则表达式对象。
     #         repl：用于替换匹配到的字符串。可以是一个字符串或一个函数。
-    #         string：要进行查找和替换的字符串。"""
+    #         string：要进行查找和替换的字符串。通过正则的查询跟替换实现token"""
     # res=re.sub(pattern,token,str1)
     # print("替换后 的token",res)
 
