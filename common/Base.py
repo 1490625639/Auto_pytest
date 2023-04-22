@@ -1,3 +1,5 @@
+import json
+
 from config.Conf import ConfigYaml
 from utils.MysqlUtil import Mysql
 
@@ -20,8 +22,9 @@ def init_db(db_alias):
     print(conn)
     return conn
 
-
-
+def json_parse(data):
+    """格式化字符，转换成json格式"""
+    return json.loads(data)if data else data
 
 if __name__ == '__main__':
     init_db("db_2")
