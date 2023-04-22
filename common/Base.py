@@ -1,9 +1,13 @@
 import json
 import re
 from config.Conf import ConfigYaml
+from utils.LogUtil import my_log
 from utils.MysqlUtil import Mysql
+from utils.AssertUtil import AssertUtil
 
 p_data = '\${(.*)}\$'
+
+log = my_log()
 
 
 # 测试push时候是否需要进行登录
@@ -31,7 +35,7 @@ def json_parse(data):
     return json.loads(data) if data else data
 
 
-def res_find(data, pattern_data=p_data): # pattern_data是一个默认参数
+def res_find(data, pattern_data=p_data):  # pattern_data是一个默认参数
     """查询(正则),并给出了一个默认的条件"""
     # pattern = re.compile('\${(.*)}\$')
     """re.compile(ptaaern_data).findall(data)是使用正则表达式从文本中匹配出符合要求的字符串，具体解释如下：
@@ -40,7 +44,9 @@ findall(data)：在字符串data中找到所有与正则表达式pattern_data匹
 所以，re.compile(ptaaern_data).findall(data)的作用就是使用编译好的正则表达式对象，从字符串data中找到所有符合要求的子串，并返回一个匹配的字符串列表。"""
     re_res = re.compile(pattern_data).findall(data)
     return re_res
-def res_sub(data,replace,pattern_data=p_data):# 最后一个参数为默认值
+
+
+def res_sub(data, replace, pattern_data=p_data):  # 最后一个参数为默认值
     """
     替换
 
@@ -50,10 +56,13 @@ def res_sub(data,replace,pattern_data=p_data):# 最后一个参数为默认值
     :return:
     """
     re_res = re.compile(pattern_data).findall(data)
-    if re_res : #如果存在进行替换,不存在就算了
-        return re.sub(pattern_data,replace,data)
-    else: return re_res
-#def params_find(headers,cookies):
+    if re_res:  # 如果存在进行替换,不存在就算了
+        return re.sub(pattern_data, replace, data)
+    else:
+        return re_res
+
+
+# def params_find(headers,cookies):
 def params_find(headers):
     """
     验证请求中是否有${}$信息需要结果关联
@@ -61,14 +70,32 @@ def params_find(headers):
     :param cookies:
     :return:
     """
-    if  "${" in headers:
-        headers=res_find(headers)
+    if "${" in headers:
+        headers = res_find(headers)
     # if  "${" in cookies: #为了保障程序运行去除cookies
     #     cookies=res_find(cookies)
-    return headers #,cookies   为了保障程序运行去除cookies
+    return headers  # ,cookies   为了保障程序运行去除cookies
+
+
+def assert_db(db_name, result, db_verify):
+    assert_util = AssertUtil()
+    # 1初始化
+    # sql = init_db("db_1")
+    sql = init_db(db_name)
+    # 2查询sql
+    db_res = sql.fetchone(db_verify)
+    log.debug("数据库查询结果:{}".format(str(db_res)))
+    # 3 数据库结果与接口返回进行验证
+    # 获取数据库结果的key
+    verify_list = list(dict(db_res).keys())
+    # 根据key获取数据库结果,接口结果
+    for line in verify_list:
+        res_line = result[line]  # 接口返回的信息
+        res_db_line = dict(db_res)[line]  # 数据库返回的信息
+        assert_util.assert_body(res_line, res_db_line)
 
 
 if __name__ == '__main__':
     #    init_db("db_2")
-    print("查询",res_find(data='{"Authorization": "JWT ${token}$"}'))
-    print("替换",res_sub(data='{"Authorization": "JWT ${token}$"}', replace="1234"))
+    print("查询", res_find(data='{"Authorization": "JWT ${token}$"}'))
+    print("替换", res_sub(data='{"Authorization": "JWT ${token}$"}', replace="1234"))

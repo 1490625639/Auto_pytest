@@ -3,7 +3,7 @@ import os
 import json
 
 import pytest
-
+from utils.AssertUtil import AssertUtil
 from common import Base
 from common.ExcelData import Data
 from config.Conf import ConfigYaml
@@ -95,6 +95,31 @@ class TestExcel:
         header = Base.json_parse(headers)
         res = self.run_api(url, method, params, headers)
         print("测试用例执行:", res)
+
+        #断言验证
+        assert_util=AssertUtil()
+        assert_util.assert_code(int(res["code"],int(code)))
+
+        # 返回结果内容
+        assert_util.assert_in_body(str(res["body"]),str(expect_result))
+        # 数据库断言验证
+            # 1初始化
+        from common.Base import init_db
+        # sql=init_db("db_1")
+        #     # 2查询sql
+        # db_res=sql.fetchone(db_verify)
+        # log.debug("数据库查询结果:{}".format(str(db_res)))
+        #     # 3 数据库结果与接口返回进行验证
+        # #获取数据库结果的key
+        # verify_list=list(dict(db_res).keys())
+        # #根据key获取数据库结果,接口结果
+        # for  line in  verify_list:
+        #     res_line=res["body"][line]
+        #     res_db_line=dict(db_res)[line]
+        #     assert_util.assert_body(res_line,res_db_line)
+        Base.assert_db("db_1",res["body"],db_verify)
+
+
         # cookie=Base.json_parse(cookies)
         # if headers:  # 1 判断headers是否存在，json转义
         #     headers = json.loads(headers)
