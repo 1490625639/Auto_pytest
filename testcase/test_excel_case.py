@@ -1,3 +1,4 @@
+import re
 import os
 import json
 
@@ -27,7 +28,7 @@ data_key = ExcelConfig.DataConfig
 
 
 class TestExcel:
-    def run_api(self,url,method,params=None,headers=None):
+    def run_api(self, url, method, params=None, headers=None):
         # ② 发送请求API
         request = Request()
         # 验证params有没有内容
@@ -43,6 +44,7 @@ class TestExcel:
         else:
             log.error("这是一个错误请求:%s" % method)
         return res
+
     def run_pre(self, pre_case):
         url = ConfigYaml().get_conf_url() + pre_case[data_key.url]
         method = pre_case[data_key.method]
@@ -50,9 +52,10 @@ class TestExcel:
         headers = pre_case[data_key.headers]
         # cookies = pre_case[data_key.cookies]
         header = Base.json_parse(headers)
-        #cookie=Base.json_parse(cookies)
-        res=self.run_api(url,method,params,headers)
-        print("运行前置用例的结果为:",res)
+        # cookie=Base.json_parse(cookies)
+        res = self.run_api(url, method, params, headers)
+        print("运行前置用例的结果为:", res)
+
     # ① 初始化信息
     # 1增加pytest方法
     @pytest.mark.parametrize("case", run_list)
@@ -92,64 +95,38 @@ class TestExcel:
             # 2找到执行用例
             # 前置测试用例
             pre_case = data_init.get_case_pre(pre_exec)
-            print("前置信息", pre_case)
-            self.run_pre(pre_case)
+        print("前置信息", pre_case)
+
+        self.run_pre(pre_case)
+
 
 # 2 测试用例方法,参数化运行
 
 if __name__ == '__main__':
     # TestExcel.test_run()
     # 4 运行
-    pytest.main(["-s", "test_excel_case.py"])
+    #  pytest.main(["-s", "test_excel_case.py"])
 
-"""一个用例
-# 1 初始化用例文件
-# ① 初始化用例文件
-case_file = os.path.join("../data", ConfigYaml().get_excel_file())
-# ② 获取用例sheet名称
-sheet_name = ConfigYaml().get_excel_sheet()
-# ③ 获取运行测试用例列表
-run_list = Data(case_file, sheet_name).get_run_data()
-# ④ 日志
-log = my_log()
 
-class TestExcel:
-    # ① 初始化信息
-    def test_run(self):
-        data_key = ExcelConfig.DataConfig
-        url = ConfigYaml().get_conf_url() + run_list[0][data_key.url]
-        在run_list[0][data_key.url]中，run_list[0]表示取出运行测试用例列表中的第一条测试用例，data_key是一个常量类，里面定义了Excel表格中各列的列名，data_key.url表示取出该测试用例中名为“url”的一列的值。所以run_list[0][data_key.url]的含义是取出运行测试用例列表中第一条测试用例中的“url”这一列的值。
-        print(url)
-        case_id = run_list[0][data_key.case_id]
-        case_model = run_list[0][data_key.case_model]
-        case_name = run_list[0][data_key.case_name]
-        pre_exec = run_list[0][data_key.pre_exec]
-        method = run_list[0][data_key.method]
-        params = run_list[0][data_key.params]
-        params_type = run_list[0][data_key.params_type]
-        expect_result = run_list[0][data_key.expect_result]
-        headers = run_list[0][data_key.headers]
-        cookies = run_list[0][data_key.cookies]
-        code = run_list[0][data_key.code]
-        db_verify = run_list[0][data_key.db_verify]
-        #print(case_model,case_name,pre_exec,method,params,params_type,expect_result,headers,cookies,code,db_verify)
 
-        # ② 发送请求
-        request = Request()
-        # 验证params有没有内容
-        if len(str(params).strip()) is not 0:
-            # params转义成json
-            params = json.loads(params)
-        # get/post
-        if str(method).lower() == "get":
-            res = request.get(url, json=params)
-        elif str(method).lower() == "post":
-            res = request.post(url, json=params)
-        else:
-            log.error("这是一个错误请求:%s"%method)
-        print(res)
-# 2 测试用例方法,参数化运行
 
-if __name__ == '__main__':
-    TestExcel.test_run()
-"""
+
+
+
+
+    """token知识点"""
+    # str1 = '{"Authorization": "JWT ${token}$"}'
+    # if "${" in str1:
+    #     print(str1)
+    # pattern = re.compile('\${(.*)}\$')
+    # re_res = pattern.findall(str1)
+    # print(re_res[0])
+    # token="123"
+    # """re.sub()是Python中的一个正则表达式函数，用于在字符串中替换匹配正则表达式的内容。
+    #         它的参数包括三个：
+    #         pattern：用于匹配字符串的正则表达式。可以是一个字符串或者一个正则表达式对象。
+    #         repl：用于替换匹配到的字符串。可以是一个字符串或一个函数。
+    #         string：要进行查找和替换的字符串。"""
+    # res=re.sub(pattern,token,str1)
+    # print("替换后 的token",res)
+
