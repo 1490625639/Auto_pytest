@@ -1,7 +1,7 @@
 import re
 import os
 import json
-
+import allure
 import pytest
 from utils.AssertUtil import AssertUtil
 from common import Base
@@ -98,7 +98,7 @@ class TestExcel:
 
         #断言验证
         assert_util=AssertUtil()
-        assert_util.assert_code(int(res["code"],int(code)))
+        assert_util.assert_code(int(["code"],int(code)))
 
         # 返回结果内容
         assert_util.assert_in_body(str(res["body"]),str(expect_result))
@@ -129,6 +129,19 @@ class TestExcel:
         #     cookie = json.loads(cookies)
         # else:
         #     cookie = cookies
+
+        # allure
+        allure.dynamic.feature(sheet_name)# 一级标签
+        allure.dynamic.story(case_model) # 二级标签:模块
+        allure.dynamic.title(case_id+case_name) #标题
+        desc="<font color='red'>请求URL:    </font> {} <Br/>"\
+         "<font color='red'>请求类型:        </font> {} <Br/>"\
+         "<font color='red'>期望结果:        </font> {} <Br/>"\
+         "<font color='red'>实际结果:        </font> {} <Br/>"\
+            .format(url,method,expect_result,res)# 格式化转成字符串并添加网页标签
+        allure.dynamic.description(desc)# 描述
+
+
 
 #    def get_correlation(self,headers,cookies,pre_res):
 #为了保障程序运行去除cookies+pre_res
@@ -164,6 +177,7 @@ class TestExcel:
         """为了保障程序运行去除cookies"""
 #        return  headers,cookies
         return  headers
+
 # 2 测试用例方法,参数化运行
 
 if __name__ == '__main__':
