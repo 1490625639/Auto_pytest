@@ -10,7 +10,7 @@ from config.Conf import ConfigYaml
 from utils.LogUtil import my_log
 from common import ExcelConfig
 from utils.RequesetsUtil import Request
-
+from config import Conf
 # 多个用例的
 # 1 初始化用例文件
 # ① 初始化用例文件
@@ -183,7 +183,13 @@ class TestExcel:
 if __name__ == '__main__':
     # TestExcel.test_run()
     # 4 运行
-    pytest.main(["-s", "test_excel_case.py"])
+    report_path=Conf.get_report_path()+os.sep+ "result"
+    report_html_path=Conf.get_report_path()+os.sep+"html"
+
+    #pytest.main(["-s", "test_excel_case.py","--allure"," ./report/result"])
+    pytest.main(["-s", "test_excel_case.py", "--allure", report_path])
+#    Base.allure_report("./report/result","./report/html")
+    Base.allure_report(report_path, report_html_path)
 
 
 

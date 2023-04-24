@@ -28,7 +28,12 @@ _db_config_file = _config_path + os.sep + "db_conf.yml"
 # 定义data目录路径
 _data_path = BASE_DIR + os.sep + "data"
 
+# 定义report路径
+_report_path = BASE_DIR +os.sep +"report"
 
+def get_report_path():
+    #获取report绝对路径
+    return _report_path
 
 # 因为是私有方法,定义一个方法来进行访问
 def get_config_path():

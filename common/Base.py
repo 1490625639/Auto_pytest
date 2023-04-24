@@ -1,5 +1,6 @@
 import json
 import re
+import subprocess
 from config.Conf import ConfigYaml
 from utils.LogUtil import my_log
 from utils.MysqlUtil import Mysql
@@ -94,6 +95,21 @@ def assert_db(db_name, result, db_verify):
         res_db_line = dict(db_res)[line]  # 数据库返回的信息
         assert_util.assert_body(res_line, res_db_line)
 
+def allure_report(report_path,report_html):
+    """
+    生成allure报告
+    :param report_path:
+    :param report_html:
+    :return:
+    """
+    # 定义执行命令
+    allure_cmd="allure generate %s -o %s --clean"%(report_path,report_html)
+    log.info("报告地址")
+    try:
+        subprocess.call(allure_cmd,shell=True)
+    except:
+        log.error("执行用例失败,请检查")
+        raise
 
 if __name__ == '__main__':
     #    init_db("db_2")
