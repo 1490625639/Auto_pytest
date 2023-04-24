@@ -88,10 +88,16 @@ class ConfigYaml:
         """根据参数alias获取该名称下的数据库信息"""
         return self.db_config[db_alias]
 
+    def get_email_info(self):
+        # 获取邮件配置信息
+        # 获取excel路径
+        return self.config["email"]
+
 if __name__ == '__main__':
     conf_read = ConfigYaml()
     # print(conf_read.get_conf_url())
     # print(conf_read.get_conf_log(), conf_read.get_conf_extension())
     #print(conf_read.get_db_conf_info("db_2"))
-    print(conf_read.get_excel_file())
-    print(conf_read.get_excel_sheet())
+ #   print(conf_read.get_excel_file())
+#    print(conf_read.get_excel_sheet())
+    print(conf_read.get_email_info())

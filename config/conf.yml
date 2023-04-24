@@ -7,3 +7,8 @@ BASE:
     url: "https://www.douyin.com"
     case_file: "testdata.xlsx"
     case_sheet: "美多商城接口测试"
+email:
+  smtpserver: "smtp协议"
+  username: "张彤"
+  password: "123123"
+  recever: "张以白"
