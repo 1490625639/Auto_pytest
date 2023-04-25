@@ -8,7 +8,7 @@ BASE:
     case_file: "testdata.xlsx"
     case_sheet: "美多商城接口测试"
 email:
-  smtpserver: "smtp协议"
-  username: "张彤"
-  password: "123123"
-  recever: "张以白"
+  smtpserver: "smtp.qq.com"
+  username: "1490625639@qq.com"
+  password: "faxxhfvbyvdtjbhh"
+  receiver: "1490625639@qq.com"

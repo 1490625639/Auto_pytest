@@ -2,6 +2,7 @@ import json
 import re
 import subprocess
 from config.Conf import ConfigYaml
+from utils.EmailUtil import SendEmail
 from utils.LogUtil import my_log
 from utils.MysqlUtil import Mysql
 from utils.AssertUtil import AssertUtil
@@ -95,7 +96,8 @@ def assert_db(db_name, result, db_verify):
         res_db_line = dict(db_res)[line]  # 数据库返回的信息
         assert_util.assert_body(res_line, res_db_line)
 
-def allure_report(report_path,report_html):
+
+def allure_report(report_path, report_html):
     """
     生成allure报告
     :param report_path:
@@ -103,14 +105,42 @@ def allure_report(report_path,report_html):
     :return:
     """
     # 定义执行命令
-    allure_cmd="allure generate %s -o %s --clean"%(report_path,report_html)
+    allure_cmd = "allure generate %s -o %s --clean" % (report_path, report_html)
     log.info("报告地址")
     try:
-        subprocess.call(allure_cmd,shell=True)
+        subprocess.call(allure_cmd, shell=True)
     except:
         log.error("执行用例失败,请检查")
         raise
 
+
+def send_mail(reprot_html_path="",content="",title="测试"):
+    """
+    # 发送邮件,默认信息,可以传参修改
+    :param reprot_html_path:
+    :param content:
+    :param title:
+    :return:
+    """
+    email_info = ConfigYaml().get_email_info()
+    smtp_addr = email_info["smtpserver"]
+    username = email_info["username"]
+    password = email_info["password"]
+    recv = email_info["receiver"]
+    email = SendEmail(
+        smtp_addr=smtp_addr,
+        username=username,
+        password=password,
+        recv=recv,
+        title=title,
+        content=content,
+        file=reprot_html_path)
+
+    email.send_mail()
+
+
+# 封装公共方法
+# 应用到用例中,发送
 if __name__ == '__main__':
     #    init_db("db_2")
     print("查询", res_find(data='{"Authorization": "JWT ${token}$"}'))
