@@ -31,11 +31,7 @@ def testlogin():
     # 3 定义测试数据
     #url = ""
     data = {"username":"张三"}
-    # 4发送
-    # r = requests.post(url=url,data=data)
-#    r=requests_post(url,json=data)
-    # # 5 输出结果
-    # print(r.json())
+
     request = Request()
     r = request.post(url, json=data)
     # 返回状态码
@@ -125,10 +121,7 @@ def order():
 
 
 if __name__ == '__main__':
-    #login()
-    # info()
-    # cart()
-    # order()
+
 
 # 1 根据默认的运行原则,调整py文件命名跟函数命名.
 # 2 pytes.main()运行

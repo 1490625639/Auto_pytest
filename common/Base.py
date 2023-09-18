@@ -11,8 +11,6 @@ p_data = '\${(.*)}\$'
 
 log = my_log()
 
-
-# 测试push时候是否需要进行登录
 # 数据库的初始化  相当于将get_db_conf_info()中进行了封装.
 # 1 定义init_db
 def init_db(db_alias):
