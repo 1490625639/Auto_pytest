@@ -25,10 +25,9 @@ print("data_list内容", data_list)
 def test_yaml(login):
     # 初始化url,data等数据  这里进行初始化
     url = ConfigYaml().get_conf_url() + login["url"]  # url拼接 http+具体接口信息
-    print(url)
     data = login["data"]  # data 是从 YAML 文件中读取的，通过 YamlReader(test_file).data_all() 返回的 data_list 中的每一个字典元素中的 data 字段获取的
     """data_list能被login["data"]识别出来的原因:
-在测试方法中，@pytest.mark.parametrize 装饰器将 data_list 列表中的数据逐一传递给 
+在测试方法中，@pytest.mark.parametrize 装饰器将 data_list 列表中的数据逐一传递给
 test_yaml 函数，并将其中的每个字典都作为 login 参数传入。
 因此，在 test_yaml 函数中，login 参数的值实际上就是 data_list 列表中的一个字典，
 其中包含了 url 和 data 两个键值对。可以通过 login["url"] 和 login["data"] 来获取相应的值。"""
@@ -41,7 +40,5 @@ test_yaml 函数，并将其中的每个字典都作为 login 参数传入。
 
 
 if __name__ == '__main__':
-    pytest.main(["-s", "--nohtml", "test_login.py"])
-# 4.13 00点34分不在家，不写代码
-# 每次提交都要登录github么？
-# 本地测试是否需要登录GitHub
+   pytest.main(["-s", "--nohtml", "test_login.py"])
+

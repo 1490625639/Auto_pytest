@@ -1,1 +1,11 @@
 * .xml
+*.js
+*.json
+*.log
+*.css
+*.html
+*.txt
+*.csv
+*.ico
+*.TAG
+*.iml
