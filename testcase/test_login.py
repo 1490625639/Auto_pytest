@@ -42,3 +42,4 @@ test_yaml 函数，并将其中的每个字典都作为 login 参数传入。
 if __name__ == '__main__':
    pytest.main(["-s", "--nohtml", "test_login.py"])
 
+# 标记
