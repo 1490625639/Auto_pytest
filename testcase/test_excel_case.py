@@ -46,6 +46,7 @@ class TestExcel:
         return res
 
     def run_pre(self, pre_case):
+        #运行前置用例方法
         url = ConfigYaml().get_conf_url() + pre_case[data_key.url]
         method = pre_case[data_key.method]
         params = pre_case[data_key.params]
@@ -61,7 +62,6 @@ class TestExcel:
     @pytest.mark.parametrize("case", run_list)
     # 2 修改方法參數
     def test_run(self, case):
-        #  print(data_key)
         # 3 重构函数内容
         url = ConfigYaml().get_conf_url() + case[data_key.url]
         """在run_list[0][data_key.url]中，run_list[0]表示取出运行测试用例列表中的第一条测试用例，data_key是一个常量类，里面定义了Excel表格中各列的列名，data_key.url表示取出该测试用例中名为“url”的一列的值。所以run_list[0][data_key.url]的含义是取出运行测试用例列表中第一条测试用例中的“url”这一列的值。"""
@@ -79,19 +79,21 @@ class TestExcel:
         # cookies = case[data_key.cookies]
         code = case[data_key.code]
         db_verify = case[data_key.db_verify]
-        # print(case_model,case_name,pre_exec,method,params,params_type,expect_result,headers,cookies,code,db_verify)
+        # print("测试获取内容",case_model,case_name,pre_exec,method,params,params_type,expect_result,headers,cookies,code,db_verify)
+        # print("f分隔符号",{case_name})
 
 
         # 1验证前置条件
         if pre_exec:
-            pass
+
             # 2找到执行用例
             # 前置测试用例
             pre_case = data_init.get_case_pre(pre_exec)
             print("前置条件信息", pre_case)
             pre_res= self.run_pre(pre_case)
-            #headers,cookies= self.get_correlation(headers,cookies,pre_res)
+            # headers,cookies= self.get_correlation(headers,cookies,pre_res)
             headers = self.get_correlation(headers,pre_res)
+
         header = Base.json_parse(headers)
         res = self.run_api(url, method, params, headers)
         print("测试用例执行:", res)
@@ -145,7 +147,7 @@ class TestExcel:
 
 #    def get_correlation(self,headers,cookies,pre_res):
 #为了保障程序运行去除cookies+pre_res
-    def get_correlation(self, headers, pre_res):
+    def get_correlation( self,headers, pre_res):
         """前置条件结果
         关联
         :param headers:
@@ -164,12 +166,13 @@ class TestExcel:
             所以加一个判断------由chatgpt提供"""
             if pre_res["body"]:
                 headers_data = pre_res["body"][headers_para[0]]
+
             else:
                 print("这里错误了")
                 headers_data = None  # 或者任何其他你希望的默认值
+            # 结果替换
+            headers=Base.res_sub(headers,headers_data)
 
-        # 结果替换
-        headers=Base.res_sub(headers,headers_data)
         # if len(cookies_para):
         #     cookies_data=pre_res["body"][cookies_para[0]]
         # # 结果替换

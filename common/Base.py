@@ -74,7 +74,7 @@ def params_find(headers):
         headers = res_find(headers)
     # if  "${" in cookies: #为了保障程序运行去除cookies
     #     cookies=res_find(cookies)
-    return headers  # ,cookies   为了保障程序运行去除cookies
+        return headers  # ,cookies   为了保障程序运行去除cookies
 
 
 def assert_db(db_name, result, db_verify):
