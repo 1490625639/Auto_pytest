@@ -1,3 +1,4 @@
+from utils.LogUtil import my_log
 from utils.YamlUtil import YamlReader
 from config import Conf
 from config.Conf import ConfigYaml
@@ -15,19 +16,22 @@ data_list = YamlReader(test_file).data_all()
 
 # 2 参数化执行用例
 
-
 @pytest.mark.parametrize("login", data_list)
 def test_yaml(login):
     url = ConfigYaml().get_conf_url() + login["url"]
     print(url)
     json = login["json"]  # data 是从 YAML 文件中读取的，通过 YamlReader(test_file).data_all() 返回的 data_list 中的每一个字典元素中的 data 字段获取的
     res=Request().post(url,json=json )
-    #获取token
-    try :
-        if res['body']['result']['token']:
-            token=res['body']['result']['token']
-            print(token)
+    # print(res)
+    assert  res['body']['code']==login['code']
+    assert  res["body"]['msg'] == login['msg']
+    try:
+        # 获取token
+        token = res['body']['result']['token']
+        print(token)
     except:
-        print("登录失败,用例执行不通过")
+        my_log().info("错误了")
+
+
 if __name__ == '__main__':
      pytest.main(["-s", "test_login.py"])
