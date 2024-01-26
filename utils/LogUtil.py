@@ -1,17 +1,17 @@
-
 # 封装一个log工具类
 import logging
 import time
 from config import Conf
 import datetime
-from  config.Conf import ConfigYaml
+from config.Conf import ConfigYaml
 import os
-#添加一个log文件的映射
-log_l={
-    "info":logging.INFO,
-    "debug":logging.DEBUG,
-    "warning":logging.WARNING,
-    "error":logging.ERROR
+
+# 添加一个log文件的映射
+log_l = {
+    "info": logging.INFO,
+    "debug": logging.DEBUG,
+    "warning": logging.WARNING,
+    "error": logging.ERROR
 
 }
 
@@ -43,36 +43,37 @@ class Logger:
             # 创建文件处理器
 
             data_time = time.strftime('%Y-%m-%d-%H-%M-%S')
-            #fh_file = logging.FileHandler(self.log_file)
+            # fh_file = logging.FileHandler(self.log_file)
             fh_file = logging.FileHandler(self.log_file, encoding='utf-8')
             fh_file.setLevel(log_l[self.log_level])
             fh_stream.setFormatter(formatter)
 
-
             # 6.添加处理器
             self.logger.addHandler(fh_stream)
             self.logger.addHandler(fh_file)
+
+
 # 1 初始化参数数据
-    # 日志文件名称，日志文件级别
-    # 日志文件名称=logs目录+当前时间+扩展名
-log_path=Conf.get_log_path()
-#当前时间
-current_time=datetime.datetime.now().strftime("%Y-%m-%d")
-#扩展名
-log_extension=ConfigYaml().get_conf_extension()
+# 日志文件名称，日志文件级别
+# 日志文件名称=logs目录+当前时间+扩展名
+log_path = Conf.get_log_path()
+# 当前时间
+current_time = datetime.datetime.now().strftime("%Y-%m-%d")
+# 扩展名
+log_extension = ConfigYaml().get_conf_extension()
 
-#拼接合同
-logfile=os.path.join(log_path,current_time+log_extension)
-#print(logfile)
+# 拼接合同
+logfile = os.path.join(log_path, current_time + log_extension)
+# print(logfile)
 
-#日志文件级别
-log_level=ConfigYaml().get_conf_log()
-#print(log_level)
-
+# 日志文件级别
+log_level = ConfigYaml().get_conf_log()
 
 # 2 对外方法,初始log工具类,提供其他类使用
 def my_log(log_name=__file__):
-    return Logger(log_file=logfile,log_name=str(log_name),log_level=log_level).logger
+    return Logger(log_file=logfile, log_name=str(log_name), log_level=log_level).logger
+
 
 if __name__ == '__main__':
     my_log().debug("debug测试")
+    my_log().info("info测试")
