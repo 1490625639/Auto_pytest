@@ -1,0 +1,5 @@
+---
+  case_name: "获取-人气推荐"
+  url: "/home/hot"
+  msg:  "操作成功"
+  expect_code: '200'

@@ -1,0 +1,5 @@
+---
+  case_name: "获取-全部分类(包含推荐商品)"
+  url: "/home/category/head"
+  msg:  "操作成功"
+  expect_code: '200'
