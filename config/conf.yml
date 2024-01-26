@@ -4,7 +4,7 @@ BASE:
   # 扩展名
   log_extension: ".log"
   test:
-    url: "https://www.douyin.com"
+    url: "http://pcapi-xiaotuxian-front-devtest.itheima.net"
     case_file: "testdata.xlsx"
     case_sheet: "美多商城接口测试"
 email:

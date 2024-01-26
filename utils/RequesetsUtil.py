@@ -5,6 +5,8 @@
 """
 import requests
 
+from utils.LogUtil import Logger, my_log
+
 
 # get方法的一个封装,将参数以及响应返回的json跟text做了判断
 # 1创建一个封装的方法
@@ -50,12 +52,16 @@ def requests_post(url, json=None, headers=None):
 # 重构
 # 1 创建类
 class Request:
+    def  __init__(self):
+        self.log = my_log("Requests")
     # 2 定义公共方法
     # 1.增加方法的参数,根据参数来验证方法get/post方法
     def requests_api(self, url=None, data=None, json=None, headers=None, cookies=None, method="get"):
         if method == "get":
+            self.log.debug("发送get请求")
             r = requests.get(url, data=data, json=json, headers=headers, cookies=cookies)
         elif method == "post":
+            self.log.debug("发送post请求")
             r = requests.post(url, data=data, json=json, headers=headers, cookies=cookies)
         # 2 重复的进行复制
 

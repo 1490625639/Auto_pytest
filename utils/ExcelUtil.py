@@ -16,11 +16,6 @@ class ExcelReader:
             self.excel_file = excel_file
             self.sheet_by = sheet_by
             self._data = list()
-            """你这里的    data = []替换成一个data=list()可以么
-            是的，data = [] 和 data = list() 是等价的，都可以用来创建一个空列表。
-            zhangtongding@foxmail.com
-            方便说下后者吗？
-            在 Python 中，list() 和 [] 的作用是相同的，都是创建一个空列表。但是，使用 [] 更加简洁，更常用，也更易读，因此建议使用 [] 创建空列表。当然，如果你更喜欢使用 list() 也是没有问题的。"""
         else:
             raise FileNotFoundError("文件不存在")
 
