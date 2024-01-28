@@ -1,0 +1,5 @@
+---
+  case_name: "获取-热门品牌"
+  url: "/home/brand"
+  msg:  "操作成功"
+  expect_code: '1'
